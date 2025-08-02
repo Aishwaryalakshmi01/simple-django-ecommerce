@@ -1,0 +1,39 @@
+{% extends 'store/base.html' %}
+{% block title %}My Orders{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4 text-center">📦 My Orders</h2>
+
+  {% if orders %}
+    {% for order in orders %}
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-primary text-white d-flex justify-content-between">
+          <span>🧾 Order #{{ order.id }}</span>
+          <span>{{ order.created_at|date:"M d, Y - H:i A" }}</span>
+        </div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            {% for item in order.items.all %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <strong>{{ item.product.name }}</strong>
+                <span>x{{ item.quantity }} — ₹{{ item.price }} each</span>
+              </li>
+            {% endfor %}
+          </ul>
+          <div class="text-end mt-3 fw-bold">
+            Total: ₹{{ order.total }}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="alert alert-info text-center">
+      You haven't placed any orders yet.
+    </div>
+    <div class="text-center">
+      <a href="{% url 'product_list' %}" class="btn btn-primary">🛍️ Start Shopping</a>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

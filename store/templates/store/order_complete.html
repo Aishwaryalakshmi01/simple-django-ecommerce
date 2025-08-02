@@ -1,0 +1,42 @@
+
+{% extends 'store/base.html' %}
+{% block title %}Order Complete{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="text-center">
+    <h1 class="mb-4">✅ Thank You for Your Order!</h1>
+    <p>Your order has been placed successfully. Here's a summary:</p>
+  </div>
+
+  <table class="table table-bordered mt-4 text-center">
+    <thead class="table-light">
+      <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price (each)</th>
+        <th>Subtotal</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in cart_items %}
+      <tr>
+        <td>{{ item.product.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>₹{{ item.product.price }}</td>
+        <td>₹{{ item.item_total }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="text-end mt-3">
+    <h4>Total: ₹{{ total }}</h4>
+  </div>
+
+  <div class="text-center mt-4">
+    <a href="{% url 'product_list' %}" class="btn btn-primary">🛍️ Continue Shopping</a>
+    <a href="{% url 'my_orders' %}" class="btn btn-outline-secondary ms-2">📦 View My Orders</a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'store/base.html' %}
+{% block title %}🛒 Checkout{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h1 class="mb-4 text-center">🧾 Order Summary</h1>
+
+  {% if cart_items %}
+  <form method="post">
+    {% csrf_token %}
+    <table class="table table-bordered text-center align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Price (each)</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in cart_items %}
+        <tr>
+          <td>{{ item.product.name }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>₹{{ item.product.price }}</td>
+          <td>₹{{ item.item_total }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="d-flex justify-content-between align-items-center mt-3">
+      <h4>Total: ₹{{ total }}</h4>
+      <button type="submit" class="btn btn-success">✅ Confirm Order</button>
+    </div>
+  </form>
+  {% else %}
+    <div class="alert alert-warning">Your cart is empty.</div>
+    <a href="{% url 'product_list' %}" class="btn btn-primary">Go Back to Products</a>
+  {% endif %}
+</div>
+{% endblock %}
